@@ -1,0 +1,35 @@
+# Name displayed in the Actions tab.
+name: Hello World with Python
+
+on:
+  # Start automatically when changes are pushed to main.
+  push:
+    branches:
+      - main
+
+  # Allow a manual run from the Actions tab.
+  workflow_dispatch:
+
+jobs:
+  hello-python:
+    name: Run the Python Hello World program
+
+    # Use a GitHub-hosted Ubuntu runner.
+    runs-on: ubuntu-latest
+
+    steps:
+      # Copy the repository files onto the runner.
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      # Make Python 3.12 available on the runner.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Set the greeting name and print the output to the workflow log.
+      - name: Run the Python program
+        env:
+          WHO_TO_GREET: 'GitHub Actions Student'
+        run: python hello.py
